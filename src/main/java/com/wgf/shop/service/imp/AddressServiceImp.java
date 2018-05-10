@@ -28,6 +28,7 @@ public class AddressServiceImp implements AddressService {
     @Override
     @Transactional
     public ResponseObject insert(AddressModule entity) {
+        entity.setStatus(true);
         try{
             if(entity.getStatus()){//默认地址
                 this.addressRepository.updateAddressStatus(entity.getOpenId());
@@ -39,5 +40,11 @@ public class AddressServiceImp implements AddressService {
             e.printStackTrace();
             return new ResponseObject().fail("FAIL",null);
         }
+    }
+
+    @Override
+    public ResponseObject findAll(String accountId, String openId) {
+        List<AddressModule> list = this.addressRepository.findByAccountIdAndOpenId(accountId,openId);
+        return new ResponseObject().success("查询成功",list);
     }
 }

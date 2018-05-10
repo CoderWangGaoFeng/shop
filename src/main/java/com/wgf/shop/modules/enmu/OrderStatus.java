@@ -7,8 +7,9 @@ public enum OrderStatus {
 
     WAIT_PAY(0,"待支付"),
     WAIT_SEND(1,"已支付待配送"),
-    ORDER_RETURN(2,"订单取消/退货"),
-    END(3,"订单结束");
+    ORDER_CANCEL(2,"订单取消"),
+    END(3,"订单结束"),
+    ORDER_RETURN(4,"退货");
 
     private Integer status;
 

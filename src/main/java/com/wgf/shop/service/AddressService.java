@@ -7,4 +7,5 @@ public interface AddressService {
 
     ResponseObject insert(AddressModule entity);
 
+    ResponseObject findAll(String accountId,String openId);
 }

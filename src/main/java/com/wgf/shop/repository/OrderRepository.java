@@ -5,6 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import javax.transaction.Transactional;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 订单持久层
@@ -12,4 +13,6 @@ import java.io.Serializable;
  */
 @Transactional
 public interface OrderRepository extends CrudRepository<OrderModule,Serializable>{
+
+    List<OrderModule> findByOpenIdAndAccountIdOrderByCreateTimeDesc(String openId,String accountId);
 }

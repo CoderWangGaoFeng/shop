@@ -3,14 +3,14 @@ package com.wgf.shop.service.imp;
 import com.wgf.shop.modules.GoodsModule;
 import com.wgf.shop.modules.GoodsTypeModule;
 import com.wgf.shop.modules.ResponseObject;
-import com.wgf.shop.modules.enmu.RequestStatus;
-import com.wgf.shop.modules.vo.Goods;
+import com.wgf.shop.modules.vo.GoodsVo;
 import com.wgf.shop.repository.GoodsRepository;
 import com.wgf.shop.repository.GoodsTypeRepository;
 import com.wgf.shop.service.GoodsService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +34,18 @@ public class GoodsServiceImp implements GoodsService {
     public ResponseObject findGoodsListByTypeId(String accountId ) {
         return Optional.ofNullable(this.goodsRepository.findByAccountIdAndStatus(accountId,true))
             .map((List<GoodsModule> list) -> {
+//                List<GoodsTypeModule> typeList = this.goodsTypeRepository.findByAccountId(accountId);
+//                List<GoodsVo> goodsVoList = new ArrayList<GoodsVo>();
+//                for(GoodsTypeModule entity : typeList){
+//                    GoodsVo goodsVo = new GoodsVo();
+//                    goodsVo.setType(entity);
+//                    List<GoodsModule> goodsList = new ArrayList<>();
+//                    for(GoodsModule goods : list){
+//                        goodsList.add(goods);
+//                    }
+//                    goodsVo.setGoods(goodsList);
+//                    goodsVoList.add(goodsVo);
+//                }
                 return new ResponseObject().success("产品列表",list);
             }).orElse(new ResponseObject().success("产品列表",null));
     }

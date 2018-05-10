@@ -25,4 +25,15 @@ public class AddressController {
     public ResponseObject insert(@RequestBody AddressModule entity){
         return this.addressService.insert(entity);
     }
+
+    /**
+     * 查询所有地址
+     * @param accountId
+     * @param openId
+     * @return
+     */
+    @RequestMapping(value="/address",method = RequestMethod.GET)
+    public ResponseObject findAll(String accountId ,String openId){
+        return this.addressService.findAll(accountId,openId);
+    }
 }

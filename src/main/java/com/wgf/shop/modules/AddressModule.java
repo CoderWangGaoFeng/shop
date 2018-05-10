@@ -36,4 +36,6 @@ public class AddressModule {
     是否默认。true为默认，false为非默认。仅有一个默认地址
      */
     private Boolean status;
+
+    private String accountId;
 }

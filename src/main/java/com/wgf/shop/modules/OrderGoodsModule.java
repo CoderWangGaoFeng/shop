@@ -24,4 +24,7 @@ public class OrderGoodsModule {
 
     private Long goodId;
 
+    private Long num;
+
+    private String orderId;
 }

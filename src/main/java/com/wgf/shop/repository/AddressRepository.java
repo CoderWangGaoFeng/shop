@@ -20,4 +20,6 @@ public interface AddressRepository extends CrudRepository<AddressModule,Serializ
     @Modifying
     @Query(value = "update AddressModule  set status = false  where openId = ?1")
     void updateAddressStatus(@Param("openId")String openId);
+
+    List<AddressModule> findByAccountIdAndOpenId(String accountId,String openId);
 }

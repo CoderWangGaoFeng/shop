@@ -10,9 +10,9 @@ import java.util.List;
  * 商品返回类
  */
 @Data
-public class Goods {
+public class GoodsVo {
 
-    private List<GoodsTypeModule> type;
+    private GoodsTypeModule type;
 
     private List<GoodsModule> goods;
 

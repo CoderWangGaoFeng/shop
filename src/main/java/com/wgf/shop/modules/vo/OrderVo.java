@@ -1,5 +1,8 @@
 package com.wgf.shop.modules.vo;
 
+import com.wgf.shop.modules.GoodsModule;
+import com.wgf.shop.modules.OrderGoodsModule;
+import com.wgf.shop.modules.OrderModule;
 import lombok.Data;
 
 import java.util.List;
@@ -15,4 +18,10 @@ public class OrderVo {
     private String addressId;
 
     private Map<Long,Long> goods;
+
+    private OrderModule order;
+
+    private List<OrderGoodsModule> orderGoods;
+
+    private String time;
 }

@@ -6,6 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import javax.transaction.Transactional;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 订单的商品列表
@@ -13,4 +14,5 @@ import java.io.Serializable;
 @Transactional
 public interface OrderGoodsRepository extends CrudRepository<OrderGoodsModule,Serializable>{
 
+    List<OrderGoodsModule> findByOrderId(String orderId);
 }

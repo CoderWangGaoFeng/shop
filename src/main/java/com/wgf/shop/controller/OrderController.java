@@ -15,6 +15,7 @@ import java.util.List;
  */
 @RestController
 @AllArgsConstructor
+@RequestMapping("/order")
 public class OrderController {
 
     private final OrderService orderService;
@@ -24,8 +25,23 @@ public class OrderController {
      * @param entity
      * @return
      */
-    @RequestMapping(value="/order",method = RequestMethod.POST)
+//    @RequestMapping(value="/order",method = RequestMethod.POST)
+    @PostMapping
     public ResponseObject insertOrder(@RequestBody OrderVo entity){
         return this.orderService.insertOrder(entity);
+    }
+
+    /**
+     * 查询订单
+     * @param openId
+     * @param accountId
+     * @param page
+     * @return
+     */
+    @GetMapping
+    public ResponseObject findOrder(@RequestParam String openId,
+                                    @RequestParam String accountId,
+                                    @RequestParam String page){
+        return this.orderService.findOrderByPage(openId,accountId,page);
     }
 }
