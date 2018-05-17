@@ -92,11 +92,20 @@ public class OrderServiceImp implements OrderService{
         List<OrderVo> voList = new ArrayList<>();
         if(orderList != null && orderList.size() > 0 ){
             for(OrderModule entity : orderList){
+                BigDecimal sum = new BigDecimal("0.00");//重新计算总价，防止价格变动
                 OrderVo vo = new OrderVo();
+//                List<OrderGoodsModule> list = this.orderGoodsRepository.findByOrderId(entity.getId());
+                List<GoodsModule> list = this.goodsRepository.findByOrderId(entity.getId());
+                for(GoodsModule goods : list){
+                    OrderGoodsModule orderGoodsEntity = this.orderGoodsRepository.
+                            findByOrderIdAndGoodId(entity.getId(),goods.getId());
+                    goods.setNum(orderGoodsEntity.getNum()+"");
+                    sum = sum.add(goods.getPrice());
+                }
+                entity.setPrice(sum);
                 vo.setOrder(entity);
                 vo.setTime(entity.getCreateTime().toString());
-                List<OrderGoodsModule> list = this.orderGoodsRepository.findByOrderId(entity.getId());
-                vo.setOrderGoods(list);
+                vo.setGoods(list);
                 voList.add(vo);
             }
             return new ResponseObject().success("查询成功",voList);

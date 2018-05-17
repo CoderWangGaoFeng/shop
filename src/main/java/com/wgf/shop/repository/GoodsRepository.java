@@ -2,6 +2,7 @@ package com.wgf.shop.repository;
 
 import com.wgf.shop.modules.GoodsModule;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.io.Serializable;
 import java.util.List;
@@ -20,4 +21,8 @@ public interface GoodsRepository extends JpaRepository<GoodsModule ,Serializable
      * @return
      */
     List<GoodsModule> findByIdIn(Set<Long> id);
+
+    @Query(value="select * from table_goods g where g.id in " +
+            "(select good_id from table_order_goods o where o.order_id = ?1)" ,nativeQuery = true)
+    List<GoodsModule> findByOrderId(String orderId);
 }

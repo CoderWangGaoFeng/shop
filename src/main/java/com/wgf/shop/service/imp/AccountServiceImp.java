@@ -1,10 +1,12 @@
 package com.wgf.shop.service.imp;
 
+import com.wgf.shop.modules.AccountInfoModule;
 import com.wgf.shop.modules.AccountModule;
 import com.wgf.shop.modules.ResponseObject;
 import com.wgf.shop.modules.TokenModule;
 import com.wgf.shop.modules.enmu.AccountStatus;
 import com.wgf.shop.modules.enmu.RequestStatus;
+import com.wgf.shop.repository.AccountInfoRepository;
 import com.wgf.shop.repository.AccountRepository;
 import com.wgf.shop.repository.TokenRepository;
 import com.wgf.shop.service.AccountService;
@@ -25,6 +27,8 @@ public class AccountServiceImp implements AccountService{
     private final AccountRepository accountRepository;
 
     private final TokenRepository tokenRepository;
+
+    private final AccountInfoRepository accountInfoRepository;
 
     /**
      * 登录
@@ -55,7 +59,9 @@ public class AccountServiceImp implements AccountService{
                                     .setCreateTime(new Timestamp(System.currentTimeMillis()))
                                     .setOverdueTime(new Timestamp(System.currentTimeMillis()+24*60*60*1000)));
                 this.tokenRepository.save(entity);
-                return new ResponseObject().success("登录成功",token);
+                AccountInfoModule accountInforEntity = this.accountInfoRepository.findByAccountId(account.getId());
+                accountInforEntity.setToken(token);
+                return new ResponseObject().success("登录成功",accountInforEntity);
             }else{
                if(!account.getPassword().equals(password)){
                    return new ResponseObject().fail("帐号或密码错误",null);

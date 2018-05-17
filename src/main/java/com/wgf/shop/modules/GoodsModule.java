@@ -51,4 +51,11 @@ public class GoodsModule {
      * 商品状态
      */
     private Boolean status;
+
+    /**
+     * 商品数量（不入库）
+     */
+    @Transient
+    private String num;
+
 }

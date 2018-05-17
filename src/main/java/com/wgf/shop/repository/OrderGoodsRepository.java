@@ -15,4 +15,6 @@ import java.util.List;
 public interface OrderGoodsRepository extends CrudRepository<OrderGoodsModule,Serializable>{
 
     List<OrderGoodsModule> findByOrderId(String orderId);
+
+    OrderGoodsModule findByOrderIdAndGoodId(String orderId,Long id );
 }

@@ -17,11 +17,13 @@ public class OrderVo {
 
     private String addressId;
 
-    private Map<Long,Long> goods;
+//    private Map<Long,Long> goods;
 
     private OrderModule order;
 
     private List<OrderGoodsModule> orderGoods;
+
+    private List<GoodsModule> goods;
 
     private String time;
 }
