@@ -59,8 +59,13 @@ public class AccountServiceImp implements AccountService{
                                     .setCreateTime(new Timestamp(System.currentTimeMillis()))
                                     .setOverdueTime(new Timestamp(System.currentTimeMillis()+24*60*60*1000)));
                 this.tokenRepository.save(entity);
-                AccountInfoModule accountInforEntity = this.accountInfoRepository.findByAccountId(account.getId());
-                accountInforEntity.setToken(token);
+                AccountInfoModule accountInforEntity = Optional.ofNullable(this.accountInfoRepository.findByAccountId(account.getId()))
+                        .map(infoentity -> {
+                            infoentity.setToken(token);
+                            return infoentity;
+                        }).orElse(new AccountInfoModule().setToken(token));
+//                AccountInfoModule accountInforEntity = this.accountInfoRepository.findByAccountId(account.getId());
+//                accountInforEntity.setToken(token);
                 return new ResponseObject().success("登录成功",accountInforEntity);
             }else{
                if(!account.getPassword().equals(password)){
