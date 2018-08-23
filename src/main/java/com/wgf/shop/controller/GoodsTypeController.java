@@ -1,5 +1,6 @@
 package com.wgf.shop.controller;
 
+import com.wgf.shop.configure.annotation.CheckLogin;
 import com.wgf.shop.modules.ResponseObject;
 import com.wgf.shop.service.GoodsTypeService;
 import io.swagger.annotations.Api;
@@ -25,6 +26,7 @@ public class GoodsTypeController {
      * @param accountId
      * @return
      */
+    @CheckLogin
     @RequestMapping(value="/goodsTypes",method = RequestMethod.GET)
     @ApiOperation(value="查询商户的所有商品分类",notes="GET请求")
     public ResponseObject findListByAccount(@RequestParam("accountId") String accountId){

@@ -1,5 +1,6 @@
 package com.wgf.shop.util;
 
+import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -28,13 +29,15 @@ public class FileUploadUtil {
 
     public String fileUpload(MultipartFile file) throws Exception{
         FTPClient ftp = new FTPClient();
-        String fileName = UUID.randomUUID().toString().replaceAll("-","");
+        String oldFileName = file.getOriginalFilename();
+        String fileName = UUID.randomUUID().toString().replaceAll("-","")+oldFileName;
         try{
             InputStream input = file.getInputStream();
-            ftp.connect(http,22);
+            ftp.connect(http,21);
             ftp.setControlEncoding("UTF-8");
             ftp.login(userName,password);
-            ftp.changeWorkingDirectory(path);
+            boolean flag = ftp.changeWorkingDirectory(path);
+            ftp.setFileType(FTP.BINARY_FILE_TYPE);//设置上传文件格式为二进制，默认格式会导致图片损坏.这句代码的位置不能改变
             ftp.storeFile(fileName,input);
             input.close();
             ftp.logout();

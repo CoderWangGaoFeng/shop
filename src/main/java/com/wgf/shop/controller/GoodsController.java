@@ -1,8 +1,10 @@
 package com.wgf.shop.controller;
 
+import com.wgf.shop.configure.annotation.CheckLogin;
 import com.wgf.shop.modules.GoodsModule;
 import com.wgf.shop.modules.ResponseObject;
 import com.wgf.shop.service.GoodsService;
+import com.wgf.shop.service.GoodsTypeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -15,6 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
 public class GoodsController {
 
     private final GoodsService goodsService;
+
+    private final GoodsTypeService goodsTypeService;
+
 
     /**
      * 产品列表初始话
@@ -34,7 +39,24 @@ public class GoodsController {
      */
     @RequestMapping(value="/goods",method = RequestMethod.POST)
     @ApiOperation(value="新增产品",notes="POST请求")
-    public void insertGoods(@RequestAttribute GoodsModule goods , @RequestParam("file") MultipartFile file){
-        System.out.println();
+    public ResponseObject insertGoods(@ModelAttribute("goods") GoodsModule goods , @RequestParam("type")String type,
+                                      @RequestParam("file") MultipartFile file){
+        if("goods".equals(type)){
+            return this.goodsService.saveGoods(file ,goods);
+        }else{
+            return this.goodsTypeService.saveGoodsType(goods);
+        }
+    }
+
+    /**
+     * 管理后台查询商品
+     * @param accountId
+     * @return
+     */
+    @CheckLogin
+    @ApiOperation(value="pc端查询商品",notes="GET请求")
+    @RequestMapping(value="/pc/goods",method = RequestMethod.GET)
+    public ResponseObject selectGoods(@RequestParam("accountId") String accountId){
+        return null;
     }
 }

@@ -8,7 +8,7 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 
 /**
- * 返回类
+ * 返回数据类
  */
 @Data
 @Accessors(chain = true)
@@ -31,6 +31,13 @@ public class ResponseObject implements Serializable{
         this.status = RequestStatus.FAIL;
         this.msg = msg;
         this.data = data;
+        return this;
+    }
+
+    public ResponseObject auth(String msg,Object data){
+        this.status = RequestStatus.AUTH;
+        this.msg = msg;
+        this.data =  data;
         return this;
     }
 }

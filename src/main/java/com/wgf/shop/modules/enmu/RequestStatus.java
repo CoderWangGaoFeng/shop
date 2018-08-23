@@ -11,6 +11,7 @@ import lombok.Setter;
 public enum RequestStatus {
 
     SUCCESS(0,"成功"),
+    AUTH(401,"未登录"),
     FAIL(1,"失败");
 
     private Integer status;

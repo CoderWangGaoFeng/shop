@@ -1,5 +1,6 @@
 package com.wgf.shop.service.imp;
 
+import com.wgf.shop.modules.GoodsModule;
 import com.wgf.shop.modules.GoodsTypeModule;
 import com.wgf.shop.modules.ResponseObject;
 import com.wgf.shop.repository.GoodsTypeRepository;
@@ -29,5 +30,22 @@ public class GoodsTypeServiceImp implements GoodsTypeService {
                 .map((List<GoodsTypeModule> list ) -> {
                     return new ResponseObject().success("产品分类",list);
                 }).orElse(new ResponseObject().success("产品分类",null));
+    }
+
+    /**
+     * 新增商品类型
+     * @Param
+     * @Return
+     * @Author wanggaofeng
+     * @Date 2018/8/20 16:08
+     **/
+    @Override
+    public ResponseObject saveGoodsType(GoodsModule goods) {
+        GoodsTypeModule goodsType = new GoodsTypeModule();
+        goodsType.setAccountId(goods.getAccountId());
+        goodsType.setName(goods.getName());
+        goodsType.setStatus(true);
+        this.goodsTypeRepository.save(goodsType);
+        return new ResponseObject().success("新增完成",null);
     }
 }

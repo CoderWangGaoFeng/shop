@@ -11,4 +11,11 @@ import java.io.Serializable;
 public interface TokenRepository  extends CrudRepository<TokenModule , Serializable>{
 
     TokenModule findByAccountId(String accountId);
+
+    /**
+     * 根据token查询账户信息
+     * @param token
+     * @return
+     */
+    TokenModule findByToken(String token);
 }

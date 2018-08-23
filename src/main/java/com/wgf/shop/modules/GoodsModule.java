@@ -1,6 +1,8 @@
 package com.wgf.shop.modules;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -11,6 +13,8 @@ import java.math.BigDecimal;
 @Entity
 @Table(name="table_goods")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class GoodsModule {
 
     @Id
@@ -57,5 +61,10 @@ public class GoodsModule {
      */
     @Transient
     private String num;
+    /**
+     * 所属菜单名
+     */
+    @Transient
+    private String typeName;
 
 }
