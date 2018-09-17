@@ -1,6 +1,7 @@
 package com.wgf.shop.service.imp;
 
 import com.wgf.shop.modules.GoodsModule;
+import com.wgf.shop.modules.GoodsTypeModule;
 import com.wgf.shop.modules.ResponseObject;
 import com.wgf.shop.repository.GoodsRepository;
 import com.wgf.shop.repository.GoodsTypeRepository;
@@ -13,8 +14,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-import java.util.Optional;
+import javax.servlet.http.HttpServletRequest;
+import javax.xml.ws.Response;
+import java.math.BigDecimal;
+import java.util.*;
 
 /**
  * 商品列表逻辑层
@@ -87,7 +90,48 @@ public class GoodsServiceImpl implements GoodsService {
      */
     @Override
     public ResponseObject selectGoods(String accountId) {
+        return Optional.ofNullable(
+                this.goodsRepository.findByAccountId(accountId))
+                .map(entitylist -> {
+                    List<GoodsModule> reList = new ArrayList<>();
+                    for(Object obj : entitylist){
+                        Object[] objArry = (Object[])obj;
+                        GoodsModule entity = new GoodsModule();
+                        entity.setId(Long.parseLong(objArry[0]+""));
+                        entity.setName(objArry[1]+"");
+                        entity.setPrice((BigDecimal)objArry[2]);
+                        entity.setStatus((Boolean)objArry[3]);
+                        entity.setTypeId(Long.valueOf(objArry[4]+""));
+                        entity.setSaleNumber((String)objArry[5]);
+                        entity.setTypeName((String)objArry[6]);
+                        entity.setImg((String)objArry[7]);
+                        entity.setAccountId((String)objArry[8]);
+                        reList.add(entity);
+                    }
+                    List<GoodsTypeModule> type = this.goodsTypeRepository.findByAccountId(accountId);
+                    List<Map<String,Object>> typeList = new ArrayList<>();
+                    for(GoodsTypeModule typeEntity : type){
+                        Map<String ,Object> map = new HashMap<>();
+                        map.put(typeEntity.getId()+"",typeEntity.getName());
+                        typeList.add(map);
+                    }
+                    Map<String,Object> returnMap = new HashMap<>();
+                    returnMap.put("goods",reList);
+                    returnMap.put("goodsType",typeList);
+                    return new ResponseObject().success("查询成功",returnMap);
+                }).orElse(new ResponseObject().success("查询成功",null));
+//        return returnList;
+    }
 
-        return null;
+    @Override
+    public ResponseObject updateGoods(HttpServletRequest request) {
+        String id = request.getParameter("id");
+        GoodsModule goods = this.goodsRepository.findById(Long.valueOf(id)).get();
+        goods.setName(request.getParameter("name"));
+        goods.setTypeId(Long.valueOf(request.getParameter("typeId")));
+        goods.setStatus(Boolean.getBoolean(request.getParameter("status")));
+        goods.setPrice( new  BigDecimal(request.getParameter("price")));
+        this.goodsRepository.save(goods);
+        return new ResponseObject().success("保存成功",null);
     }
 }

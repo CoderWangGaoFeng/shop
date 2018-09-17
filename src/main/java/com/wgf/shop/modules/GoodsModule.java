@@ -1,5 +1,7 @@
 package com.wgf.shop.modules;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,6 +17,7 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ApiModel(value="商品实体",description="商品出入叄数")
 public class GoodsModule {
 
     @Id
@@ -24,6 +27,7 @@ public class GoodsModule {
     /**
      * 类型
      */
+    @ApiModelProperty(value="菜单id")
     private Long typeId;
 
     /**

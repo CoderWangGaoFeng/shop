@@ -7,6 +7,7 @@ import com.wgf.shop.repository.TokenRepository;
 import lombok.AllArgsConstructor;
 import net.sf.json.JSONObject;
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -61,13 +62,14 @@ public class LoginInterceptor implements HandlerInterceptor{
             if(!"".equals(token) && token != null && !"".equals(token.trim())){//token不为空判断token是否有效
                 TokenModule myToken = this.tokenRepository.findByToken(token);
                 if(myToken == null){
-//                    response.new ResponseObject().auth("请登录",null);
+                    response.sendError(401);
                     return false;
                 }else{
                     /**
                      * 判断token是否在有效期中
                      */
                     if(myToken.getOverdueTime().before(new Timestamp(System.currentTimeMillis()))){
+                        response.sendError(401);
                         return false;
                     }else{
                         return true;
@@ -89,6 +91,7 @@ public class LoginInterceptor implements HandlerInterceptor{
 //                    }
 //                }
 //            }
+            response.sendError(401);
             return false;
         }
     }

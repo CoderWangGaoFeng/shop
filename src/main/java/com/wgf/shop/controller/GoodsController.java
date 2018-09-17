@@ -7,9 +7,12 @@ import com.wgf.shop.service.GoodsService;
 import com.wgf.shop.service.GoodsTypeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @AllArgsConstructor
@@ -37,9 +40,10 @@ public class GoodsController {
      * @param goods
      * @param file 产品图片
      */
+    @CheckLogin
     @RequestMapping(value="/goods",method = RequestMethod.POST)
     @ApiOperation(value="新增产品",notes="POST请求")
-    public ResponseObject insertGoods(@ModelAttribute("goods") GoodsModule goods , @RequestParam("type")String type,
+    public ResponseObject insertGoods(@ModelAttribute("goods")GoodsModule goods , @RequestParam("type")String type,
                                       @RequestParam("file") MultipartFile file){
         if("goods".equals(type)){
             return this.goodsService.saveGoods(file ,goods);
@@ -57,6 +61,13 @@ public class GoodsController {
     @ApiOperation(value="pc端查询商品",notes="GET请求")
     @RequestMapping(value="/pc/goods",method = RequestMethod.GET)
     public ResponseObject selectGoods(@RequestParam("accountId") String accountId){
-        return null;
+        return this.goodsService.selectGoods(accountId);
+    }
+
+    @ApiOperation(value="pc端查询商品",notes="GET请求")
+    @RequestMapping(value="/goods/update",method = RequestMethod.POST)
+    public void updateGoods(HttpServletRequest request){
+        this.goodsService.updateGoods(request);
+        System.out.print("a");
     }
 }

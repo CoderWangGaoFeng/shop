@@ -80,6 +80,13 @@
 			<artifactId>camel-ftp</artifactId>
 			<version>2.13.2</version>
 		</dependency>
+
+		<!-- 状态机引包 -->
+		<dependency>
+			<groupId>org.springframework.statemachine</groupId>
+			<artifactId>spring-statemachine-core</artifactId>
+			<version>1.2.0.RELEASE</version>
+		</dependency>
 	</dependencies>
 
 	<build>

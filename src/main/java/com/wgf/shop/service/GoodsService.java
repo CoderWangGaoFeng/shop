@@ -4,6 +4,8 @@ import com.wgf.shop.modules.GoodsModule;
 import com.wgf.shop.modules.ResponseObject;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+
 public interface GoodsService {
 
     ResponseObject findGoodsListByTypeId(String accountId);
@@ -11,4 +13,6 @@ public interface GoodsService {
     ResponseObject saveGoods(MultipartFile file , GoodsModule goods);
 
     ResponseObject selectGoods(String accountId);
+
+    ResponseObject updateGoods(HttpServletRequest request);
 }
