@@ -26,7 +26,6 @@ public class GoodsTypeController {
      * @param accountId
      * @return
      */
-    @CheckLogin
     @RequestMapping(value="/goodsTypes",method = RequestMethod.GET)
     @ApiOperation(value="查询商户的所有商品分类",notes="GET请求")
     public ResponseObject findListByAccount(@RequestParam("accountId") String accountId){

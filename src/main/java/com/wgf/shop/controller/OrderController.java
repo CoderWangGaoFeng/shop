@@ -1,5 +1,6 @@
 package com.wgf.shop.controller;
 
+import com.wgf.shop.configure.annotation.CheckLogin;
 import com.wgf.shop.modules.OrderModule;
 import com.wgf.shop.modules.ResponseObject;
 import com.wgf.shop.modules.vo.OrderVo;
@@ -7,6 +8,7 @@ import com.wgf.shop.service.OrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import org.hibernate.annotations.Check;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -48,5 +50,16 @@ public class OrderController {
                                     @RequestParam String accountId,
                                     @RequestParam String page){
         return this.orderService.findOrderByPage(openId,accountId,page);
+    }
+
+    /**
+     * 删除订单
+     * @Author wanggaofeng
+     * @Date 2018/9/22 9:40
+     **/
+    @RequestMapping(method = RequestMethod.DELETE)
+    @ApiOperation(value="删除订单",notes = "DELETE请求")
+    public ResponseObject delOrder(@RequestParam("id") String id){
+        return this.orderService.delOrder(id);
     }
 }

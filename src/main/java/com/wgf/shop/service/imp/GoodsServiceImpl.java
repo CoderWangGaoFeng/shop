@@ -125,13 +125,19 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     public ResponseObject updateGoods(HttpServletRequest request) {
+        String oper = request.getParameter("oper");
         String id = request.getParameter("id");
-        GoodsModule goods = this.goodsRepository.findById(Long.valueOf(id)).get();
-        goods.setName(request.getParameter("name"));
-        goods.setTypeId(Long.valueOf(request.getParameter("typeId")));
-        goods.setStatus(Boolean.getBoolean(request.getParameter("status")));
-        goods.setPrice( new  BigDecimal(request.getParameter("price")));
-        this.goodsRepository.save(goods);
+        if("edit".equals(oper)){
+            GoodsModule goods = this.goodsRepository.findById(Long.valueOf(id)).get();
+            goods.setName(request.getParameter("name"));
+            goods.setTypeId(Long.valueOf(request.getParameter("typeId")));
+            goods.setStatus(true);
+            goods.setPrice( new  BigDecimal(request.getParameter("price")));
+            goods.setSaleNumber("0");
+            this.goodsRepository.save(goods);
+        }else{
+            this.goodsRepository.deleteById(Long.valueOf(id));
+        }
         return new ResponseObject().success("保存成功",null);
     }
 }

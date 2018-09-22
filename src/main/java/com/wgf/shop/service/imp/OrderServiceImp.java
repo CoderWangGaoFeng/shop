@@ -100,7 +100,7 @@ public class OrderServiceImp implements OrderService{
                     OrderGoodsModule orderGoodsEntity = this.orderGoodsRepository.
                             findByOrderIdAndGoodId(entity.getId(),goods.getId());
                     goods.setNum(orderGoodsEntity.getNum()+"");
-                    sum = sum.add(goods.getPrice());
+                    sum = sum.add(goods.getPrice().multiply(new BigDecimal(goods.getNum())));
                 }
                 entity.setPrice(sum);
                 vo.setOrder(entity);
@@ -111,6 +111,24 @@ public class OrderServiceImp implements OrderService{
             return new ResponseObject().success("查询成功",voList);
         }else{
             return new ResponseObject().success("还没有订单哦",null);
+        }
+    }
+
+    @Override
+    public ResponseObject delOrder(String id) {
+        /*
+        -- 需要校验openId来确定订单是否是该用户
+        1.查询订单状态，只能删除未付款的订单
+        2.删除订单下商品列表
+         */
+        OrderModule order = this.orderRepository.findById(Long.parseLong(id)).get();
+        if(order != null && order.getStatus().equals(OrderStatus.WAIT_PAY)){
+            List<OrderGoodsModule> orderGoodsList = this.orderGoodsRepository.findByOrderId(order.getId());
+            this.orderGoodsRepository.deleteAll(orderGoodsList);
+            this.orderRepository.delete(order);
+            return  new ResponseObject().success("删除成功",null);
+        }else{
+            return  new ResponseObject().fail("只能删除待付款订单",null);
         }
     }
 }
