@@ -89,14 +89,31 @@
 		</dependency>
 	</dependencies>
 
-	<build>
+	<!-- <build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<configuration>  
+                <failOnMissingWebXml>false</failOnMissingWebXml>  
+            </configuration>  
 		</plugins>
+	</build> -->
+	<build>
+	    <pluginManagement>
+	        <plugins>
+	            <plugin>  
+	                <groupId>org.apache.maven.plugins</groupId>  
+	                <artifactId>maven-war-plugin</artifactId>  
+	                <configuration>
+	                	<!-- 告诉maven,web.xml不是必须的，否则报错 -->
+	                    <failOnMissingWebXml>false</failOnMissingWebXml>  
+	                </configuration>  
+	            </plugin> 
+	        </plugins>
+	
+	    </pluginManagement>
 	</build>
-
 
 </project>
