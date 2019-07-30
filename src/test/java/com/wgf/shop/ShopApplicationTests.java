@@ -12,5 +12,11 @@ public class ShopApplicationTests {
 	@Test
 	public void contextLoads() {
 	}
+<<<<<<< HEAD
 //nihao
+=======
+
+
+
+>>>>>>> parent of 2cad9c7... Revert "test"
 }
