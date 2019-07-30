@@ -13,6 +13,4 @@ public class ShopApplicationTests {
 	public void contextLoads() {
 	}
 
-
-
 }
